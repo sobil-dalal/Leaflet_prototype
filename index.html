@@ -18,6 +18,7 @@
     <script src=".\src\supportingJS\dehaatLegendControl.js"></script>
     <script src=".\src\supportingJS\dehaatOnButtonClick.js"></script>
     <script src=".\src\supportingJS\dehaatHelpingMethods.js"></script>
+    <script src=".\src\supportingJS\dehaatCurrentLocation.js"></script>
     <link href=".\web-inf\css\mapPage.css" rel="stylesheet">
     <link href=".\web-inf\css\menuBar.css" rel="stylesheet">
     <link href=".\web-inf\lib\sidebarV2_plugin\leaflet-sidebar.css" rel="stylesheet">
@@ -60,6 +61,12 @@
         zoom: 10,
         layers: [baseEsri_WorldImageryMap]
       });
+
+      map.locate({setView: true});
+      var currentLocationMarker,currentLocationAccuracy;
+      map.on('locationfound', onCurrentLocationFound);
+      map.on('click', currentLocationMapClick);
+      map.on('locationerror', onCurrentLocationError);
 
       // Creating the control for layers
       var baseControlLayers = L.control.groupedLayers(baseMaps, "", {
