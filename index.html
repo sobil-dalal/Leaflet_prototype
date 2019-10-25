@@ -12,18 +12,19 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src=".\web-inf\lib\leaflet_groupedlayercontrol\leaflet.groupedlayercontrol.js"></script>
     <script src=".\web-inf\lib\sidebarV2_plugin\leaflet-sidebar-v2.min.js"></script>
-    <script src=".\web-inf\lib\leaflet_locate\L.Control.Locate.js"></script>
+    <script src=".\web-inf\lib\leaflet_locate\L.Control.Locate.min.js"></script>
     <script src=".\src\supportingJS\dehaatStyle.js"></script>
     <script src=".\src\supportingJS\dehaatContainer_switch.js"></script>
     <script src=".\src\supportingJS\dehaatInfoControl.js"></script>
     <script src=".\src\supportingJS\dehaatLegendControl.js"></script>
     <script src=".\src\supportingJS\dehaatOnButtonClick.js"></script>
     <script src=".\src\supportingJS\dehaatHelpingMethods.js"></script>
-    <script src=".\src\supportingJS\dehaatCurrentLocation.js"></script>
     <link href=".\web-inf\css\mapPage.css" rel="stylesheet">
     <link href=".\web-inf\css\menuBar.css" rel="stylesheet">
     <link href=".\web-inf\lib\sidebarV2_plugin\leaflet-sidebar.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href=".\web-inf\lib\fontawesome-free-5.10.2-web\css\allInOne.min.css" rel="stylesheet">
+    <link rel="stylesheet" href=".\web-inf\lib\leaflet_locate\L.Control.Locate.min.css" />
   </head>
   <body style="background-color:#f0f0f7;">
     <div style="background-color:#2F2E43;"><img src=".\web-inf\images\logos\DeehatIcon.png" alt="Deehat" style="width:200px;height:50px;"></div>
@@ -63,12 +64,6 @@
         layers: [baseEsri_WorldImageryMap]
       });
 
-      map.locate({setView: true});
-      var currentLocationMarker,currentLocationAccuracy;
-      map.on('locationfound', onCurrentLocationFound);
-      map.on('click', currentLocationMapClick);
-      map.on('locationerror', onCurrentLocationError);
-
       // Creating the control for layers
       var baseControlLayers = L.control.groupedLayers(baseMaps, "", {
         collapsed: false
@@ -87,6 +82,13 @@
           farmSegementsGeoJson = jsonData;
         }
       });
+
+      var lc = L.control.locate({
+          strings: {
+              title: "Show me where I am !"
+          }
+      });
+      lc.addTo(map);
       /* ----------------------------Base maps ends---------------------------- */
 
       /* ----------------------------All layers instance creation starts---------------------------- */
