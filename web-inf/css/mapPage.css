@@ -7,7 +7,6 @@ html, body{
   height: 77vh;
   max-width: 100vw;
   background-color: white;
-  visibility: hidden;
 }
 
 .baseMapBtn {
